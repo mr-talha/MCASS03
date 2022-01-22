@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WeatherRVAdapter extends RecyclerView.Adapter <WeatherRVAdapter.ViewHolder> {
     private Context context;
@@ -33,10 +36,18 @@ public class WeatherRVAdapter extends RecyclerView.Adapter <WeatherRVAdapter.Vie
     @Override
     public void onBindViewHolder(@NonNull WeatherRVAdapter.ViewHolder holder, int position) {
         WeatherRVModal modal = weatherRVModalArrayList.get(position);
-        holder.temperatureTV.setText(modal.getTemperature());
+        holder.temperatureTV.setText(modal.getTemperature()+"°C");
         Picasso.get().load("http:".concat(modal.getIcon())).into(holder.conditionTV);
         holder.windTV.setText(modal.getWindSpeed()+"Km/h");
-
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat output = new SimpleDateFormat("hh:mm aa");
+        try{
+            Date t = input.parse(modal.getTime());
+            holder.timeTV.setText(output.format(t));
+        }catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
