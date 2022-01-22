@@ -1,20 +1,31 @@
 package org.talha.mcass03;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,7 +63,40 @@ public class MainActivity extends AppCompatActivity {
         weatherRV.setAdapter(weatherRVAdapter);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED);
+        {
+             ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_CODE);
+        }
 
+        Location location= locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+    }
+    private String getCityName(double longitude, double latitude)
+    {
+        String cityName = "Not Found";
+        Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+        try{
+            List<Address> addresses =  gcd.getFromLocation(latitude,longitude,10);
+
+            for(Address adr : addresses){
+                if(adr != null)
+                {
+                    String city = adr.getLocality();
+                    if(city != null && !city.equals(""))
+                    {
+                        cityName = city;
+                    }
+                }
+                else
+                {
+                    Log.d("TAG","City not found");
+                    Toast.makeText(this, "User city not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return cityName;
     }
     private void getWeatherInfo(String cityName)
     {
