@@ -88,7 +88,7 @@
                 android:layout_gravity="center"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_search"
-                android:Tint="@color/white"
+                android:backgroundTint="@color/white"
                 />
 
 
@@ -113,7 +113,7 @@
             android:id="@+id/idIVIcon"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/idTVTemperature"
-            android:layout_margin="10do"
+            android:layout_margin="10dp"
             android:src="@mipmap/ic_launcher"
 
             />
@@ -136,7 +136,7 @@
             android:layout_marginBottom="10dp"
             android:text="Today's Weather Forecast"
             android:textColor="@color/white"
-            android:layout_above="@id/idRVWeather"
+            android:layout_above="@id/idRvWeather"
             android:textStyle="bold"
             />
 
