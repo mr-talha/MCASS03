@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         getWeatherInfo(cityname);
 
+
+
     }
     private String getCityName(double longitude, double latitude)
     {
