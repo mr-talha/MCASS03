@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private WeatherRVAdapter weatherRVAdapter;
     private LocationManager locationManager;
     private int PERMISSION_CODE=1;
+    private String cityname;
 
 
     @Override
@@ -69,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Location location= locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        cityname = getCityName(location.getLongitude(), location.getLatitude());
+
+        getWeatherInfo(cityname);
 
     }
     private String getCityName(double longitude, double latitude)
