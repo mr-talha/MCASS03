@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -177,6 +178,18 @@ public class MainActivity extends AppCompatActivity {
                     {
                         Picasso.get().load("").into(backIV);
                     }
+
+                    JSONObject forecastObj = response.getJSONObject("forecast");
+                    JSONObject forcast0 = forecastObj.getJSONArray ("forecastday").getJSONObject(0);
+                    JSONArray hourArray = forcast0.getJSONArray( "hour");
+
+
+
+
+
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
