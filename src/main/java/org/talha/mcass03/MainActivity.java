@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -73,6 +74,21 @@ public class MainActivity extends AppCompatActivity {
         cityname = getCityName(location.getLongitude(), location.getLatitude());
 
         getWeatherInfo(cityname);
+
+        searchIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String city = cityEdt.getText().toString();
+                if(city.isEmpty())
+                {
+                    Toast.makeText(MainActivity.this , "Please Enter city name", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    cityNameTV.setText(cityname);
+                    getWeatherInfo(city);
+                }
+            }
+        });
 
 
 
